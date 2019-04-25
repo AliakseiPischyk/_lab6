@@ -1,0 +1,4 @@
+language: java
+
+script:
+  -lab6lab6-master/src/test/
