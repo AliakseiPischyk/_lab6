@@ -1,4 +1,9 @@
 language: java
+jdk: oraclejdk11
 
-script:
-  -lab6lab6-master/src/test/
+install: true
+script: ./mvnw clean install
+
+cache:
+  directories:
+    - $HOME/.m2
