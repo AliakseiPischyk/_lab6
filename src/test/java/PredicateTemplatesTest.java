@@ -1,5 +1,3 @@
-package myAPI;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -34,7 +32,9 @@ public class PredicateTemplatesTest {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void isMinus1Prime() { assertFalse(new PredicateTemplate().isPrime(-1));}
+    public void isMinus1Prime() {
+        assertFalse(new PredicateTemplate().isPrime(-1));
+    }
 
     @Test
     public void is0Prime() {

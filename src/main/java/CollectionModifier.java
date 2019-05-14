@@ -1,35 +1,34 @@
-package myAPI;
-
 import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Modifier<T extends Number> {
-    Predicate<T> numberPredicate;
-    Predicate<Integer> positionPredicate;
-    Function<T,T> modifier;
+public class CollectionModifier<T extends Number> implements Modifier<T> {
+    private Predicate<T> numberPredicate;
+    private Predicate<Integer> positionPredicate;
+    private Function<T, T> modifier;
 
-    public Modifier(final Predicate<T> numberPredicate, final Predicate<Integer> positionPredicate, final Function<T,T> modifier){
+    CollectionModifier(final Predicate<T> numberPredicate, final Predicate<Integer> positionPredicate, final Function<T, T> modifier) {
         this.modifier = modifier;
         this.positionPredicate = positionPredicate;
         this.numberPredicate = numberPredicate;
     }
 
-    public void excludeElementsAtPositions(Collection<T> collection){
+    void excludeElementsAtPositions(Collection<T> collection) {
         int currPos = 0;
         Iterator<T> iterator = collection.iterator();
 
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             iterator.next();
-            if(positionPredicate.test(currPos)){
+            if (positionPredicate.test(currPos)) {
                 iterator.remove();
             }
             currPos++;
         }
     }
 
-    public Collection<T> modifyCollection(Collection<T> collection){
+    @Override
+    public Collection<T> modifyConsideringNumberAndPositionPredicates(Collection<T> collection) {
         int currPos = 0;
         List<T> modifiedList = new ArrayList<>();
         Iterator<T> iterator = collection.iterator();
@@ -45,15 +44,6 @@ public class Modifier<T extends Number> {
         return modifiedList;
     }
 
-    public Set<T> toSet(final Collection<T> collection){
-        Set<T> set = new HashSet<>();
-
-        for (Iterator<T> iterator = collection.iterator(); iterator.hasNext(); ){
-            set.add(iterator.next());
-        }
-
-        return set;
-    }
 
 //    public static long calcSumOf3DMatricesElems(final Collection<Collection<Number>> ... collections){
 //        long accumulator = 0;
@@ -71,24 +61,24 @@ public class Modifier<T extends Number> {
 //        return accumulator;
 //    }
 
-    public BigInteger calcSumOf3DMatricesElems(final  ArrayList<ArrayList<ArrayList<T>>> lolWtf){
+    BigInteger calcSumOf3DMatricesElems(final ArrayList<ArrayList<ArrayList<T>>> lolWtf) {
         BigInteger accumulator = new BigInteger("0");
 
-        for (ArrayList<ArrayList<T>> arrayListArrayList : lolWtf){
-           for (ArrayList<T> arrayList : arrayListArrayList){
-               for (Number number : arrayList){
-                   accumulator.add(new BigInteger(String.valueOf(number.longValue())));
-               }
-           }
+        for (ArrayList<ArrayList<T>> arrayListArrayList : lolWtf) {
+            for (ArrayList<T> arrayList : arrayListArrayList) {
+                for (Number number : arrayList) {
+                    accumulator.add(new BigInteger(String.valueOf(number.longValue())));
+                }
+            }
         }
         return accumulator;
     }
 
-    public void fillArrayWithRandomNumbers(ArrayList<ArrayList<ArrayList<Integer>>> lolWtf, int bound, int dimension) {
+    void fillArrayWithRandomNumbers(ArrayList<ArrayList<ArrayList<Integer>>> lolWtf, int bound, int dimension) {
         Random random = new Random();
 
         for (int i = 0; i < dimension; i++) {
-            ArrayList<ArrayList<Integer>> arrayListArrayList = new ArrayList<ArrayList<Integer>>();
+            ArrayList<ArrayList<Integer>> arrayListArrayList = new ArrayList<>();
             for (int j = 0; j < dimension; j++) {
                 ArrayList<Integer> arrayList = new ArrayList<>();
                 for (int k = 0; k < dimension; k++) {
@@ -107,5 +97,5 @@ public class Modifier<T extends Number> {
 //                }
 //            }
 //        }
-    }
+}
 
